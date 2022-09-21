@@ -15,6 +15,8 @@ export default function Editor({$target, initialState = {
 
     this.setState =(nextState)=>{
         this.state = nextState
+        $editor.querySelector('[name=title]').value = this.state.title
+        $editor.querySelector('[name=content]').value = this.state.content
         this.render()
     }
     this.render = () =>{
@@ -29,6 +31,7 @@ export default function Editor({$target, initialState = {
 
     $editor.addEventListener('keyup', e =>{
         const {target} = e
+
         const name = target.getAttribute('name')
         
         if(this.state[name] !== undefined){
@@ -41,5 +44,6 @@ export default function Editor({$target, initialState = {
         onEditing(this.state)
 
         }
-    })
+    )
 }
+
