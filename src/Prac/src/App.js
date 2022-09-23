@@ -3,11 +3,24 @@ import PostEditPage from './PostEditPage.js'
 
 export default function App({$target}){
 
-    const postsPage = new PostsPage({$target})
-    const postEditPage = new PostEditPage({$target,initialState:{
-        postId:'new'
+    const postsPage = new PostsPage({
+        $target,
+        onPostClick:(id)=>{
+            history.pushState(null,null,`/posts/${id}`)
+        }
+    })
+    const postEditPage = new PostEditPage({
+        $target,
+        initialState:{
+            postId:'new',
+            post:{
+                title: '',
+                content: ''
+        }
+        
     }})
     this.route =()=>{
+        $target.innerHTML = ''
         const {pathname} = window.location
         
         if(pathname ==='/'){
@@ -17,4 +30,9 @@ export default function App({$target}){
             postEditPage.setState({postId})
         }
     }
+    this.route()
+    window.addEventListener('route-change',(nextUrl)=>{
+        history.pushState(null,null,nextUrl)
+        this.route()
+    })
 }
