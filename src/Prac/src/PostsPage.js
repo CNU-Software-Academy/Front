@@ -3,12 +3,14 @@ import {request} from './api.js'
 
 export default function PostsPage({
     $target,
+    o
 }){
     const $page = document.createElement('div')
 
     const postList = new PostList({
-        $target,
-        initialState:[]
+        $target:$page,
+        initialState:[],
+        
     })
     
     const $newPostButton = document.createElement('button')

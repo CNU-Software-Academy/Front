@@ -1,9 +1,38 @@
 import PostsPage from "./PostsPage.js"
+import PostEditPage from './PostEditPage.js'
 
 export default function App({$target}){
 
-    const postsPage = newPostsPage({$target})
-
-    postsPage.render()
-
+    const postsPage = new PostsPage({
+        $target,
+        onPostClick:(id)=>{
+            history.pushState(null,null,`/posts/${id}`)
+        }
+    })
+    const postEditPage = new PostEditPage({
+        $target,
+        initialState:{
+            postId:'new',
+            post:{
+                title: '',
+                content: ''
+        }
+        
+    }})
+    this.route =()=>{
+        $target.innerHTML = ''
+        const {pathname} = window.location
+        
+        if(pathname ==='/'){
+            postsPage.render()
+        }else if(pathname.indexOf('/posts/')===0){
+            const [, , postId] = pathname.split('/')
+            postEditPage.setState({postId})
+        }
+    }
+    this.route()
+    window.addEventListener('route-change',(nextUrl)=>{
+        history.pushState(null,null,nextUrl)
+        this.route()
+    })
 }

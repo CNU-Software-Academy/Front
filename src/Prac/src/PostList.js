@@ -20,4 +20,19 @@ export default function PostList({$target, initialState, onPostClick}){
     }
 
     this.render()
+
+    $postList.addEventListener('click',(e)=>{
+
+        const $li = e.target.closest('li')
+
+        if($li){
+            const {id} = $li.dataset
+            
+            window.dispatchEvent(new Event('route-change',(e)=>{
+                detail:{
+                    id
+                }
+            }))
+        }
+    })
 }
