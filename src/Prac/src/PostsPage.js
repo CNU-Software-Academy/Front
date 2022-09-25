@@ -1,9 +1,10 @@
 import PostList from "./PostList.js"
 import {request} from './api.js'
+import LinkButton from "./LinkButton.js"
 
 export default function PostsPage({
     $target,
-    o
+    
 }){
     const $page = document.createElement('div')
 
@@ -13,16 +14,22 @@ export default function PostsPage({
         
     })
     
-    const $newPostButton = document.createElement('button')
-    $newPostButton.textContent = 'newPOst'
-    $page.appendChild($newPostButton)
-    const fetchPosts = async() =>{
-        const posts = await request('/posts')
-
+    new LinkButton({
+        $target:$page,
+        initialState:{
+            text:'Newpost',
+            link: '/posts/new'
+        }
+    })
+    
+    this.state = async() =>{
+        const posts =await request('/posts')
         postList.setState(posts)
+        this.render()
     }
-    this.render = async() =>{
-        await fetchPosts()
+    
+
+    this.render=async()=>{
         $target.appendChild($page)
     }
 }

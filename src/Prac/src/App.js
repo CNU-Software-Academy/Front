@@ -1,5 +1,6 @@
 import PostsPage from "./PostsPage.js"
 import PostEditPage from './PostEditPage.js'
+import { initRouter } from "./router.js"
 
 export default function App({$target}){
 
@@ -24,15 +25,14 @@ export default function App({$target}){
         const {pathname} = window.location
         
         if(pathname ==='/'){
-            postsPage.render()
+            postsPage.setState()
         }else if(pathname.indexOf('/posts/')===0){
             const [, , postId] = pathname.split('/')
             postEditPage.setState({postId})
         }
     }
     this.route()
-    window.addEventListener('route-change',(nextUrl)=>{
-        history.pushState(null,null,nextUrl)
-        this.route()
-    })
+
+    initRouter(()=>this.route())
+    
 }

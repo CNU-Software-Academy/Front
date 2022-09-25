@@ -1,4 +1,3 @@
-import App from './App.js'
 import Editor from './Editor.js'
 import { setItem } from './storage.js'
 
