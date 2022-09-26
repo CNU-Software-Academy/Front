@@ -1,17 +1,15 @@
 export default function Editor({$target, initialState = {
     title : '',
     content: '',
-}}){
+}, onEditing}){
     const $editor = document.createElement('div')
 
     $editor.innerHTML = `
-                <input type>='text' name='title' style= 'width:600px;' />
+                <input type ='text' name='title' style= 'width:600px;' />
                 <div name='content' contentEditable = 'true' style='width:600px;height:400px; border:1px solid black; padding:8px;'></div>
             `
     this.state = initialState
 
-    $editor.style.height = '350px'
-    $editor.style.width = '600px'
 
     $target.appendChild($editor)
 
@@ -23,12 +21,12 @@ export default function Editor({$target, initialState = {
 
     this.render = () =>{
         const richContent = this.state.content.split('\n').map(line=>{
-            if(line.indexOf('#')===0){
-                return `<h1>${line.substring(2)}</h1>`
+            if(line.indexOf('# ')===0){
+                return `<h1>${line.substr(2)}</h1>`
             }else if (line.indexOf('##')===0){
-                return `<h2>${line.substring(3)}</h2>`
+                return `<h2>${line.substr(3)}</h2>`
             }else if (line.indexOf('###')===0){
-                return `<h3>${line.substring(3)}</h3>`
+                return `<h3>${line.substr(4)}</h3>`
             }
             return line
         }).join('<br>')
@@ -36,24 +34,25 @@ export default function Editor({$target, initialState = {
         $editor.querySelector('[name=title]').value = this.state.title
         $editor.querySelector('[name=content]').innerHTML = richContent
         
-        
     }
-    this.render()  // 규격
+    this.render()
+    
+      // 규격
 
     $editor.querySelector('[name=title]').addEventListener('keyup', e =>{
         const nextState ={
             ...this.state,
-            title:e.target
+            title: e.target
         }
 
         this.setState(nextState)
         onEditing(this.state)
 
     })
-    $editor.querySelector('[name=content]').addEventListener('input',e=>{
+    $editor.querySelector('[name=content]').addEventListener('input', e=>{
         const nextState ={
             ...this.state,
-            content: e.target.innerHTML
+            content: e.target.innerText
         }
         this.setState(nextState)
     })

@@ -49,7 +49,7 @@ export default function PostEditPage({$target,initialState}){
                     removeItem(postLocalSaveKey)
 
                 }
-            },1000)
+            },2000)
         }
     })
 
@@ -110,11 +110,11 @@ export default function PostEditPage({$target,initialState}){
         }
     }
 
-  new LinkButton({
-    $target : $page,
-    initialState:{
-        text:'목록으로 이동',
-        link:'/'
-    }
+    new LinkButton({
+        $target : $page,
+        initialState:{
+            text:'목록으로 이동',
+            link:'/'
+        }
     })
 }

@@ -17,4 +17,3 @@ export const request = async(url,options = {}) =>{
         alert(e.message)
     }
 }
-export{request}

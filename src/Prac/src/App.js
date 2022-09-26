@@ -2,13 +2,16 @@ import PostsPage from "./PostsPage.js"
 import PostEditPage from './PostEditPage.js'
 import { initRouter } from "./router.js"
 
-export default function App({$target}){
 
+
+
+
+
+
+export default function App({$target}){
     const postsPage = new PostsPage({
         $target,
-        onPostClick:(id)=>{
-            history.pushState(null,null,`/posts/${id}`)
-        }
+    
     })
     const postEditPage = new PostEditPage({
         $target,
@@ -17,20 +20,23 @@ export default function App({$target}){
             post:{
                 title: '',
                 content: ''
+            }
         }
-        
-    }})
+    })
+
+
     this.route =()=>{
         $target.innerHTML = ''
         const {pathname} = window.location
         
         if(pathname ==='/'){
-            postsPage.setState()
+            postsPage.render()
         }else if(pathname.indexOf('/posts/')===0){
             const [, , postId] = pathname.split('/')
             postEditPage.setState({postId})
         }
     }
+    
     this.route()
 
     initRouter(()=>this.route())
