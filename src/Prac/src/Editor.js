@@ -56,5 +56,5 @@ export default function Editor({$target, initialState = {
         }
         this.setState(nextState)
     })
-}
+}//
 

@@ -16,4 +16,4 @@ export const request = async(url,options = {}) =>{
     }catch(e){
         alert(e.message)
     }
-}
+}//

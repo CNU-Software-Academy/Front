@@ -41,4 +41,4 @@ export default function App({$target}){
 
     initRouter(()=>this.route())
     
-}
+}//
