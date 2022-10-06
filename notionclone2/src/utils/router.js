@@ -1,22 +1,41 @@
-const ROUTE_CHANGE_EVENT_NAME = 'route-change'
+import { ROUTER_CHANGE_EVENT_NAME, POPSTATE_EVENT_NAME } from './ConstantsName.js';
 
-export const initRouter =(onRoute)=>{
-    window.addEventListener(ROUTE_CHANGE_EVENT_NAME,(e)=>{
-        const {nextUrl} = e.detail
-        
-        if(nextUrl){
-            history.pushState(null,null,nextUrl)
-            onRoute()
+const routerDispatcher = (nextUrl, isReplace = false) => {
+    window.dispatchEvent(
+        new CustomEvent(ROUTER_CHANGE_EVENT_NAME, {
+            detail: {
+                nextUrl,
+                isReplace,
+            },
+        })
+    );
+};
+
+const initRouter = (onRoute) => {
+    window.addEventListener(ROUTER_CHANGE_EVENT_NAME, (event) => {
+        const { nextUrl, isReplace } = event.detail;
+
+        if (nextUrl) {
+            if (isReplace) {
+
+                window.history.replaceState(null, null, nextUrl);
+
+            }   else{
+
+                window.history.pushState(null, null, nextUrl);
+            }
+            onRoute();
         }
-    })
+    });
 
-}
+    window.addEventListener(POPSTATE_EVENT_NAME, () => {
+        onRoute();
+    });
+};
 
-export const push =(nextUrl)=>{
-    
-    window.dispatchEvent(new CustomEvent('route-change',{
-        detail:{
-            nextUrl
-        }
-    }))
-}//
+export const RouterUtils = {
+
+  routerDispatcher,
+  initRouter,
+  
+};
