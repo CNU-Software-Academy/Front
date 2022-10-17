@@ -5,3 +5,5 @@
 사용자 편의를 위한 사이드 바
 작성 내용의 삭제를 위한 휴지통 기능
 History Api를 사용해 SPA형태로 제작
+
+/*<img src="/src/img/profile.png" alt="notion-profile" class="header-notion__profile">
